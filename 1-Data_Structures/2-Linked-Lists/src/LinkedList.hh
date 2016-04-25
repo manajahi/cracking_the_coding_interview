@@ -26,7 +26,7 @@
 #pragma once
 #endif
 
-namespace datastructs
+namespace data_structs
 {
 
     template<typename T>
