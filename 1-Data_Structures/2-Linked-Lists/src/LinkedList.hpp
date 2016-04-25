@@ -33,7 +33,8 @@ namespace datastructs
     {
         
     }
-    
+   
+    template<typename T> 
     LinkedList<T>::~LinkedList()
     {
         Node * mNode;
@@ -45,13 +46,15 @@ namespace datastructs
     }
 
      // Modifiers
+    template<typename T>
     void LinkedList<T>::push_back(T&& item)
     {
         Node * mNode = new Node(std::move(item), nullptr, tail);
         reassign_LinkedList_hierarchy(mNode);
         ++elems;
     }
-    
+   
+    template<typename T> 
     void LinkedList<T>::push_back(const T& item)
     {
        Node * mNode = new Node(item, nullptr, tail);
@@ -59,6 +62,7 @@ namespace datastructs
        ++elems;
     }
 
+    template<typename T>
     void LinkedList<T>::push_front(T&& item)
     {
         Node * mNode = new Node(std::move(item), head, nullptr);
@@ -66,6 +70,7 @@ namespace datastructs
         ++elems;
     }
 
+    template<typename T>
     void LinkedList<T>::push_front(const T& item)
     {
         Node * mNode = new Node(item, head, nullptr);
@@ -73,6 +78,7 @@ namespace datastructs
         ++elems;
     }
 
+    template<typename T> 
     void LinkedList<T>::pop_back()
     {   
         if (tail != nullptr){
@@ -83,6 +89,7 @@ namespace datastructs
         }
     }
 
+    template<typename T>
     void LinkedList<T>::pop_front()
     {   
         if (head != nullptr) {
@@ -93,40 +100,84 @@ namespace datastructs
         }
     }
 
+    template<typename T>
     void LinkedList<T>::swap(LinkedList<T>& x)
     {
+        std::swap(head, x.head);
+        std::swap(tail, x.tail);
+        std::swap(elems, x.elems);
     }
-
+    
+    template<typename T>
     void LinkedList<T>::clear()
     {
     }
 
     // Iterators
-        
-    const_iterator cbegin() const;
-    iterator begin() const;
+    template<typename T>    
+    const_iterator LinkedList<T>::cbegin() const;
 
-    const_iterator cend() const;
-    iterator end() const;
+    template<typename T>
+    iterator LinkedList<T>::begin() const;
 
-    const_iterator crbegin() const;
-    iterator rbegin() const;
+    template<typename T>
+    const_iterator LinkedList<T>::cend() const;
 
-    const_iterator crend() const;
-    iterator rend() const;
+    template<typename T>
+    iterator LinkedList<T>::end() const;
+
+    template<typename T>
+    const_iterator LinkedList<T>::crbegin() const;
+
+    template<typename T>
+    iterator LinkedList<T>::rbegin() const;
+
+    template<typename T>
+    const_iterator LinkedList<T>::crend() const;
+
+    template<typename T>
+    iterator LinkedList<T>::rend() const;
 
     // Capacity
-    size_t size() const;
-    bool empty const;
+    template<typename T>
+    size_t LinkedList<T>::size() const
+    {
+        return elems;
+    }
+
+    template<typename T>
+    bool LinkedList<T>::empty() const
+    {
+        return head == nullptr;
+    }
 
     // Element Access
-    T& front() const;
-    const T& front() const;
-    T& back() const;
-    const T& back() const()
+    template<typename T>
+    T& LinkedList<T>::front() const
+    {
+        return head->item;
+    }
+
+    template<typename T>
+    const T& LinkedList<T>::front() const
+    {
+        return head->item;    
+    }
+
+    template<typename T>
+    T& LinkedList<T>::back() const
+    {
+        return tail->item;
+    }
+
+    template<typename T>
+    const T& LinkedList<T>::back() const
+    {
+        return tail->item;
+    }
 
     // Helper Functions
-    
+    template<typename T>
     void LinkedList<T>::reassign_LinkedList_tail(const T * const node)
     {
         if (head == nullptr)
@@ -136,6 +187,7 @@ namespace datastructs
         tail = node;
     }
 
+    template<typename T>
     void LinkedList<T>::reassign_LinkedList_head(const T * const node)
     {
         if (tail == nullptr)

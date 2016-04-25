@@ -69,7 +69,7 @@ namespace datastructs
         T& front() const;
         const T& front() const;
         T& back() const;
-        const T& back() const()
+        const T& back() const;
         
       private:
         struct Node
