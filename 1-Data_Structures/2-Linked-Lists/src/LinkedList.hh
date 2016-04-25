@@ -19,6 +19,8 @@
  * (C) 2016, E. Higham
  */
 
+#include <utility>
+
 namespace DataStructs
 {
 
@@ -79,9 +81,14 @@ namespace DataStructs
                 : item(std::move(item))
                 , next(next)
                 , previous(previous) {}
+        };
 
-             Node<T> * head, * tail;
-        };    
+        size_t elems = 0;
+        Node<T> * head, * tail;
+
+        // Helper Functions
+
+        void reassign_LinkedList_hierarchy(const T * const node);
     };
 `
 

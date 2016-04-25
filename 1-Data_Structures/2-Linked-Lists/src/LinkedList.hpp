@@ -24,21 +24,30 @@ namespace DataStructs
     template<typename T>
     LinkedList<T>& LinkedList<T>::operator = (const LinkedList<T>& list)
     {
-      
         
     }
     
     LinkedList<T>::~LinkedList()
     {
+        Node * mNode;
+        while(head) {
+            mNode = head;
+            head = head->next;
+            delete mNode;
+        }
     }
 
      // Modifiers
     void LinkedList<T>::push_back(T&& item)
     {
+        Node * mNode = new Node(std::move(item), nullptr, tail);
+        reassign_LinkedList_hierarchy(mNode);
     }
     
     void LinkedList<T>::push_back(const T& item)
     {
+       Node * mNode = new Node(item,nullptr, tail);
+       reassign_LinkedList_hierarchy(mNode);
     }
 
     void LinkedList<T>::push_front(T&& item)
@@ -89,5 +98,16 @@ namespace DataStructs
     T& back() const;
     const T& back() const()
 
+    // Helper Functions
+    
+    void LinkedList<T>::reassign_LinkedList_hierarchy(const T * const node)
+    {
+        if (head == nullptr)
+            head = node;
+        if (tail != nullptr)
+            tail.next = node;
+        tail = node;
+        ++elems;
+    }
 } // end namespace DataStructs
 
