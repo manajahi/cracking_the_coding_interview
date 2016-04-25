@@ -19,9 +19,14 @@
  * (C) 2016, E. Higham
  */
 
-#include <utility>
+#ifndef DATA_STRUCTS_LINKEDLIST_HH
+#define DATA_STRUCTS_LINKEDLIST_HH
 
-namespace DataStructs
+#ifdef SUPPORTS_PRAGMA_ONCE
+#pragma once
+#endif
+
+namespace datastructs
 {
 
     template<typename T>
@@ -85,14 +90,11 @@ namespace DataStructs
 
         size_t elems = 0;
         Node<T> * head, * tail;
-
-        // Helper Functions
-
-        void reassign_LinkedList_tail(const T * const node);
-        void reassign_LinkedList_head(const T * const node);
     };
 `
 
 } // end namespace DataStructs
 
 #include "LinkedList.hpp"
+
+#endif // DATA_STRUCTS_LINKEDLIST_HH

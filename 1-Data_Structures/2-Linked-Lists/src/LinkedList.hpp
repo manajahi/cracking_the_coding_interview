@@ -19,7 +19,14 @@
  * (C) 2016, E. Higham
  */
 
-namespace DataStructs
+#ifndef DATA_STRUCTS_LINKEDLIST_HPP
+#define DATA_STRUCTS_LINKEDLIST_HPP
+
+#ifdef SUPPORTS_PRAGMA_ONCE
+#pragma once
+#endif
+
+namespace data_structs
 {
     template<typename T>
     LinkedList<T>& LinkedList<T>::operator = (const LinkedList<T>& list)
@@ -140,4 +147,6 @@ namespace DataStructs
     }
 
 } // end namespace DataStructs
+
+#endif //DATA_STRUCTS_LINKEDLIST_HPP
 
