@@ -1,6 +1,21 @@
 /* LinkedList.hh
  * Defines a template for a double linked-list
  * Modelled on std::list
+ * 
+ * This file is a part of LinkedList_test.
+ *
+ * LinkedList_test is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * LinkedList_test is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with LinkedList_test.  If not, see <http://www.gnu.org/licenses/>.
  * (C) 2016, E. Higham
  */
 
