@@ -1,4 +1,4 @@
-/* LinkedList.hh
+/* LinkedList.hpp
  * Defines a templated implementation for a double linked-list
  * Modelled on std::list
  * 
@@ -26,7 +26,7 @@
 #pragma once
 #endif
 
-namespace data_structs
+namespace datastructs
 {
     template<typename T>
     LinkedList<T>& LinkedList<T>::operator = (const LinkedList<T>& list)
@@ -146,7 +146,7 @@ namespace data_structs
         head = node;
     }
 
-} // end namespace DataStructs
+} // end namespace datastructs
 
 #endif //DATA_STRUCTS_LINKEDLIST_HPP
 

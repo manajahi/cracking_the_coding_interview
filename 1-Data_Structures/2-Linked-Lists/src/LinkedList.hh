@@ -26,7 +26,7 @@
 #pragma once
 #endif
 
-namespace data_structs
+namespace datastructs
 {
 
     template<typename T>
@@ -93,7 +93,7 @@ namespace data_structs
     };
 `
 
-} // end namespace DataStructs
+} // end namespace datastructs
 
 #include "LinkedList.hpp"
 
