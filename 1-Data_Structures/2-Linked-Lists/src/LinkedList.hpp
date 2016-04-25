@@ -42,28 +42,48 @@ namespace DataStructs
     {
         Node * mNode = new Node(std::move(item), nullptr, tail);
         reassign_LinkedList_hierarchy(mNode);
+        ++elems;
     }
     
     void LinkedList<T>::push_back(const T& item)
     {
-       Node * mNode = new Node(item,nullptr, tail);
-       reassign_LinkedList_hierarchy(mNode);
+       Node * mNode = new Node(item, nullptr, tail);
+       reassign_LinkedList_tail(mNode);
+       ++elems;
     }
 
     void LinkedList<T>::push_front(T&& item)
     {
+        Node * mNode = new Node(std::move(item), head, nullptr);
+        reassign_LinkedList_head(mNode);
+        ++elems;
     }
 
     void LinkedList<T>::push_front(const T& item)
     {
+        Node * mNode = new Node(item, head, nullptr);
+        reassign_LinkedList_head(mNode);
+        ++elems;
     }
 
     void LinkedList<T>::pop_back()
-    {
+    {   
+        if (tail != nullptr){
+            Node * _previous = tail->previous;
+            delete tail;
+            reassign_LinkedList_tail(_previous);
+            --elems;
+        }
     }
 
     void LinkedList<T>::pop_front()
-    {
+    {   
+        if (head != nullptr) {
+            Node * _next = head->next;
+            delete head;
+            reassign_LinkedList_head(_next);
+            --elems;
+        }
     }
 
     void LinkedList<T>::swap(LinkedList<T>& x)
@@ -100,14 +120,24 @@ namespace DataStructs
 
     // Helper Functions
     
-    void LinkedList<T>::reassign_LinkedList_hierarchy(const T * const node)
+    void LinkedList<T>::reassign_LinkedList_tail(const T * const node)
     {
         if (head == nullptr)
             head = node;
         if (tail != nullptr)
             tail.next = node;
         tail = node;
-        ++elems;
     }
+
+    void LinkedList<T>::reassign_LinkedList_head(const T * const node)
+    {
+        if (tail == nullptr)
+            tail = node;
+        if (head != nullptr)
+            head.previous = node;
+        }
+        head = node;
+    }
+
 } // end namespace DataStructs
 

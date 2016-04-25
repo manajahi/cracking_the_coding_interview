@@ -88,7 +88,8 @@ namespace DataStructs
 
         // Helper Functions
 
-        void reassign_LinkedList_hierarchy(const T * const node);
+        void reassign_LinkedList_tail(const T * const node);
+        void reassign_LinkedList_head(const T * const node);
     };
 `
 
