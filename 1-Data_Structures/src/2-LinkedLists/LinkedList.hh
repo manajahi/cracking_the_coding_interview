@@ -33,6 +33,7 @@ namespace datastructs
     class LinkedList
     {
         LinkedList<T>& operator = (const LinkedList<T>&);
+
         ~LinkedList();
 
         // Modifiers

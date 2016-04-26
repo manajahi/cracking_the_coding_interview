@@ -29,20 +29,22 @@
 namespace datastructs
 {
     template<typename T>
-    LinkedList<T>& LinkedList<T>::operator = (const LinkedList<T>& list)
+    LinkedList<T>& LinkedList<T>::operator = (const LinkedList<T>& rhs)
     {
-        
+        if (this != &rhs){
+            clear();
+
+            elems = rhs.elems;
+            head = rhs.head;
+            tail = rhs.tail;
+        }
+        return *this;
     }
-   
+
     template<typename T> 
     LinkedList<T>::~LinkedList()
     {
-        Node * mNode;
-        while(head) {
-            mNode = head;
-            head = head->next;
-            delete mNode;
-        }
+        clear();
     }
 
      // Modifiers
@@ -111,20 +113,40 @@ namespace datastructs
     template<typename T>
     void LinkedList<T>::clear()
     {
+        Node * mNode;
+        while(head){
+            mNode = head;
+            head = head->next;
+            delete head;
+        }
+        elems = 0;
+        tail = head = nullptr;
     }
 
     // Iterators
     template<typename T>    
-    const_iterator LinkedList<T>::cbegin() const;
+    const_iterator LinkedList<T>::cbegin() const
+    {
+        return head->item;    
+    }
 
     template<typename T>
-    iterator LinkedList<T>::begin() const;
+    iterator LinkedList<T>::begin() const
+    {
+        return head->item;
+    }
 
     template<typename T>
-    const_iterator LinkedList<T>::cend() const;
+    const_iterator LinkedList<T>::cend() const
+    {
+        return tail->item;
+    }
 
     template<typename T>
-    iterator LinkedList<T>::end() const;
+    iterator LinkedList<T>::end() const
+    {
+        return tail->item;
+    }
 
     template<typename T>
     const_iterator LinkedList<T>::crbegin() const;
@@ -183,7 +205,7 @@ namespace datastructs
         if (head == nullptr)
             head = node;
         if (tail != nullptr)
-            tail.next = node;
+            tail->next = node;
         tail = node;
     }
 
@@ -193,7 +215,7 @@ namespace datastructs
         if (tail == nullptr)
             tail = node;
         if (head != nullptr)
-            head.previous = node;
+            head->previous = node;
         }
         head = node;
     }
