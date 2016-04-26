@@ -22,10 +22,6 @@
 #ifndef DATA_STRUCTS_LINKEDLIST_HH
 #define DATA_STRUCTS_LINKEDLIST_HH
 
-#ifdef SUPPORTS_PRAGMA_ONCE
-#pragma once
-#endif
-
 #include<iterator>
 #include "iterator_traits.hh"
 

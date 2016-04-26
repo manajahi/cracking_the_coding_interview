@@ -22,10 +22,6 @@
 #ifndef DATA_STRUCTS_LINKEDLIST_HPP
 #define DATA_STRUCTS_LINKEDLIST_HPP
 
-#ifdef SUPPORTS_PRAGMA_ONCE
-#pragma once
-#endif
-
 namespace datastructs
 {
     template<typename T>

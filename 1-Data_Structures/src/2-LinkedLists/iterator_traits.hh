@@ -21,15 +21,11 @@
 #ifdef DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
 #define DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
 
-#ifdef SUPPORTS_PRAGMA_ONCE
-#pragma once
-#endif
-
 namespace datastructs
 {
-    enum class Direction {FORWARD, REVERSE};
+    enum class direction {forward, reverse};
 
-    template<enum class E>
+    template<direction D>
     struct direction_selector
     {
         template<typename N>
@@ -47,7 +43,7 @@ namespace datastructs
     };
 
     template<>
-    struct direction_selector<Direction::REVERSE>
+    struct direction_selector<D::reverse>
     {
         template<typename N>
         static N * moveToNext(N * _node)
@@ -62,18 +58,18 @@ namespace datastructs
         }
     };
 
-    template<typename N, enum class E>
+    template<typename N, direction D>
     N * _moveToNext(N * _node) const
     {
-        return direction_selector<E::value>::moveToNext(_node);
+        return direction_selector<D>::moveToNext(_node);
     }
 
-    template<typename N, enum class E>
+    template<typename N, direction D>
     N * _moveToPrevious(N * _node) const
     {                                                             
-        return direction_selector<E::value>::moveToPrevious(_node);
+        return direction_selector<D>::moveToPrevious(_node);
     }
 
 } // namespace datastructs
 
-#endif // DATA_STRUCTS_LINKEDLIST_NODETRAITS_HH
+#endif // DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
