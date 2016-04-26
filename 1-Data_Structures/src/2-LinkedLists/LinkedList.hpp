@@ -56,7 +56,7 @@ namespace datastructs
     void LinkedList<T>::push_back(const T& item)
     {
        Node * mNode = new Node(item, nullptr, tail);
-       reassign_LinkedList_tail(mNode);
+       reassign_tail(mNode);
        ++elems;
     }
 
@@ -64,7 +64,7 @@ namespace datastructs
     void LinkedList<T>::push_front(T&& item)
     {
         Node * mNode = new Node(std::move(item), head, nullptr);
-        reassign_LinkedList_head(mNode);
+        reassign_head(mNode);
         ++elems;
     }
 
@@ -72,7 +72,7 @@ namespace datastructs
     void LinkedList<T>::push_front(const T& item)
     {
         Node * mNode = new Node(item, head, nullptr);
-        reassign_LinkedList_head(mNode);
+        reassign_head(mNode);
         ++elems;
     }
 
@@ -82,7 +82,7 @@ namespace datastructs
         if (tail != nullptr){
             Node * _previous = tail->previous;
             delete tail;
-            reassign_LinkedList_tail(_previous);
+            reassign_tail(_previous);
             --elems;
         }
     }
@@ -93,7 +93,7 @@ namespace datastructs
         if (head != nullptr) {
             Node * _next = head->next;
             delete head;
-            reassign_LinkedList_head(_next);
+            reassign_head(_next);
             --elems;
         }
     }
@@ -121,49 +121,49 @@ namespace datastructs
 
     // Iterators
     template<typename T>    
-    const_iterator LinkedList<T>::cbegin() const
+    const_iterator<T> LinkedList<T>::cbegin() const
     {
         return const_iterator(*head);    
     }
 
     template<typename T>
-    iterator LinkedList<T>::begin() const
+    iterator<T> LinkedList<T>::begin() const
     {
         return iterator(*head);
     }
 
     template<typename T>
-    const_iterator LinkedList<T>::cend() const
+    const_iterator<T> LinkedList<T>::cend() const
     {
         return const_iterator(trail->next);
     }
 
     template<typename T>
-    iterator LinkedList<T>::end() const
+    iterator<T> LinkedList<T>::end() const
     {
         return iterator(tail->end);
     }
 
     template<typename T>
-    const_reverse_iterator LinkedList<T>::crbegin() const
+    const_reverse_iterator<T> LinkedList<T>::crbegin() const
     {
         return const_reverse_iterator(*tail);
     }
 
     template<typename T>
-    reverse_iterator LinkedList<T>::rbegin() const
+    reverse_iterator<T> LinkedList<T>::rbegin() const
     {
         return reverse_iterator(*tail); 
     }
 
     template<typename T>
-    const_reverse_iterator LinkedList<T>::crend() const
+    const_reverse_iterator<T> LinkedList<T>::crend() const
     {
         return const_reverse_iterator(head->previous);
     }
 
     template<typename T>
-    reverse_iterator LinkedList<T>::rend() const
+    reverse_iterator<T> LinkedList<T>::rend() const
     {
         return reverse_iterator(head->previous);
     }
@@ -183,7 +183,7 @@ namespace datastructs
 
     // Element Access
     template<typename T>
-    T& LinkedList<T>::front() const
+    T& LinkedList<T>::front() 
     {
         return head->item;
     }
@@ -195,7 +195,7 @@ namespace datastructs
     }
 
     template<typename T>
-    T& LinkedList<T>::back() const
+    T& LinkedList<T>::back() 
     {
         return tail->item;
     }
@@ -208,7 +208,7 @@ namespace datastructs
 
     // Helper Functions
     template<typename T>
-    void LinkedList<T>::reassign_LinkedList_tail(const T * const node)
+    void LinkedList<T>::reassign_tail(const T * const node)
     {
         if (head == nullptr)
             head = node;
@@ -218,13 +218,12 @@ namespace datastructs
     }
 
     template<typename T>
-    void LinkedList<T>::reassign_LinkedList_head(const T * const node)
+    void LinkedList<T>::reassign_head(const T * const node)
     {
         if (tail == nullptr)
             tail = node;
         if (head != nullptr)
             head->previous = node;
-        }
         head = node;
     }
 

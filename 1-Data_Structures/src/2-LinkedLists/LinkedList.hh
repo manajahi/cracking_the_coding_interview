@@ -69,49 +69,49 @@ namespace datastructs
         void clear();
 
         // Iterators
-        template<typename N, typename E>
-        class iterator : public std::iterator<std::bidirectional_iterator_tag, N>
+        template<typename N, datastructs::direction D>
+        class ListIterator : public std::iterator<std::bidirectional_iterator_tag, N>
         {
             N * _node;
           public:
-            iterator(const N * _node) : _node(_node) {}
-            iterator(const iterator& iter) : _node(iter._node) {}
+            ListIterator(const N * _node) : _node(_node) {}
+            ListIterator(const ListIterator& iter) : _node(iter._node) {}
             
-            iterator& operator ++()
+            ListIterator& operator ++()
             {
-                _node = _moveToNext<E>(_node);
+                _node = _moveToNext<D>(_node);
                 return _node->data;
             }
 
 
-            iterator operator ++(N)
+            ListIterator operator ++(N)
             {
-                iterator _iter(*this);
+                ListIterator _iter(*this);
                 operator ++();
                 return *_iter;
             }
 
-            iterator& operator --()
+            ListIterator& operator --()
             {
-                _node = _moveToPrevious<E>(_node);
+                _node = _moveToPrevious<D>(_node);
                 return _node->data;
             }
 
-            iterator operator --(N)
+            ListIterator operator --(N)
             {
-                iterator _iter(*this);
+                ListIterator _iter(*this);
                 operator --();
                 return _iter;
             }
 
-            iterator operator == (const iterator& rhs)
+            ListIterator operator == (const ListIterator& rhs)
             {
-                return data == rhs.data;
+                return _node->data == rhs.data;
             }
 
-            iterator operator != (const iterator& rhs)
+            ListIterator operator != (const ListIterator& rhs)
             {
-                return data != rhs.data;
+                return _node->data != rhs.data;
             }
 
             T& operator *() 
@@ -120,11 +120,10 @@ namespace datastructs
             }
         };
 
-        typedef iterator<Node, direction::forward> iterator;
-        typedef iterator<const Node, direction::forward> const_iterator;
-
-        typedef iterator<Node, direction::reverse> reverse_iterator;
-        typedef iterator<const Node, direction::reverse> reverse_const_iterator;
+        typedef ListIterator<Node, direction::forward> iterator;
+        typedef ListIterator<const Node, direction::forward> const_iterator;
+        typedef ListIterator<Node, direction::reverse> reverse_iterator;
+        typedef ListIterator<const Node, direction::reverse> const_reverse_iterator;
 
         const_iterator cbegin() const;
         iterator begin() const;
@@ -140,15 +139,17 @@ namespace datastructs
 
         // Capacity
         size_t size() const;
-        bool empty const;
+        bool empty() const;
 
         // Element Access
-        T& front() const;
+        T& front();
         const T& front() const;
-        T& back() const;
+        T& back();
         const T& back() const;
-        
 
+      private:
+        void reassign_head(const T * const node);
+        void reassign_tail(const T * const node);
     };
 
 

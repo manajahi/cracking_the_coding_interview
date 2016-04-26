@@ -18,7 +18,7 @@
  * (C) 2016, E. Higham
  */
 
-#ifdef DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
+#ifndef DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
 #define DATA_STRUCTS_LINKEDLIST_ITERATORTRAITS_HH
 
 namespace datastructs
@@ -43,7 +43,7 @@ namespace datastructs
     };
 
     template<>
-    struct direction_selector<D::reverse>
+    struct direction_selector<direction::reverse>
     {
         template<typename N>
         static N * moveToNext(N * _node)
@@ -59,13 +59,13 @@ namespace datastructs
     };
 
     template<typename N, direction D>
-    N * _moveToNext(N * _node) const
+    N * _moveToNext(N * _node)
     {
         return direction_selector<D>::moveToNext(_node);
     }
 
     template<typename N, direction D>
-    N * _moveToPrevious(N * _node) const
+    N * _moveToPrevious(N * _node)
     {                                                             
         return direction_selector<D>::moveToPrevious(_node);
     }
