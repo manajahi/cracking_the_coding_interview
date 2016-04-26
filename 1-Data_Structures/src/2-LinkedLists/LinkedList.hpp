@@ -127,38 +127,50 @@ namespace datastructs
     template<typename T>    
     const_iterator LinkedList<T>::cbegin() const
     {
-        return head->item;    
+        return const_iterator(*head);    
     }
 
     template<typename T>
     iterator LinkedList<T>::begin() const
     {
-        return head->item;
+        return iterator(*head);
     }
 
     template<typename T>
     const_iterator LinkedList<T>::cend() const
     {
-        return tail->item;
+        return const_iterator(trail->next);
     }
 
     template<typename T>
     iterator LinkedList<T>::end() const
     {
-        return tail->item;
+        return iterator(tail->end);
     }
 
     template<typename T>
-    const_iterator LinkedList<T>::crbegin() const;
+    const_reverse_iterator LinkedList<T>::crbegin() const
+    {
+        return const_reverse_iterator(*tail);
+    }
 
     template<typename T>
-    iterator LinkedList<T>::rbegin() const;
+    reverse_iterator LinkedList<T>::rbegin() const
+    {
+        return reverse_iterator(*tail); 
+    }
 
     template<typename T>
-    const_iterator LinkedList<T>::crend() const;
+    const_reverse_iterator LinkedList<T>::crend() const
+    {
+        return const_reverse_iterator(head->previous);
+    }
 
     template<typename T>
-    iterator LinkedList<T>::rend() const;
+    reverse_iterator LinkedList<T>::rend() const
+    {
+        return reverse_iterator(head->previous);
+    }
 
     // Capacity
     template<typename T>

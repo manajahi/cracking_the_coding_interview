@@ -27,6 +27,7 @@
 #endif
 
 #include<iterator>
+#include "iterator_traits.hh"
 
 namespace datastructs
 {
@@ -39,7 +40,7 @@ namespace datastructs
         struct Node
         {
             T data;
-            Node<T> * next, * previous;
+            Node * next, * previous;
 
             Node(const T& data, Node * next, Node * previous)
                 : data(data)
@@ -53,7 +54,7 @@ namespace datastructs
         };
 
         size_t elems = 0;
-        Node<T> * head, * tail;
+        Node * head, * tail;
 
       public:
 
@@ -72,42 +73,44 @@ namespace datastructs
         void clear();
 
         // Iterators
-        class iterator : public std::iterator<std::bidirectional_iterator_tag, T>
+        template<typename N, typename E>
+        class iterator : public std::iterator<std::bidirectional_iterator_tag, N>
         {
-            T * data;
+            N * _node;
           public:
-            iterator(const T * data) : data(data) {}
-            iterator(const iterator& iter) : data(iter.data) {}
+            iterator(const N * _node) : _node(_node) {}
+            iterator(const iterator& iter) : _node(iter._node) {}
             
             iterator& operator ++()
             {
-                this = this->next;
-                return *this;
+                _node = _moveToNext<E>(_node);
+                return _node->data;
             }
 
-            iterator operator ++(T)
+
+            iterator operator ++(N)
             {
                 iterator _iter(*this);
                 operator ++();
-                return _iter;
+                return *_iter;
             }
 
             iterator& operator --()
             {
-                this = this->previous;
-                return *this;
+                _node = _moveToPrevious<E>(_node);
+                return _node->data;
             }
 
-            iterator operator --(T)
+            iterator operator --(N)
             {
                 iterator _iter(*this);
-                this = this->previous;
+                operator --();
                 return _iter;
             }
 
             iterator operator == (const iterator& rhs)
             {
-                return data == rhs.data
+                return data == rhs.data;
             }
 
             iterator operator != (const iterator& rhs)
@@ -115,17 +118,17 @@ namespace datastructs
                 return data != rhs.data;
             }
 
-            T& operator *()
+            T& operator *() 
             {
-                return *data;
+                return _node->data;
             }
-            
         };
 
-        class reverse_iterator : public std::iterator<std::forward_iterator_tag, T>
-        {
+        typedef iterator<Node, direction::FORWARD> iterator;
+        typedef iterator<const Node, direction::FORWARD> const_iterator;
 
-        };
+        typedef iterator<Node, direction::REVERSE> reverse_iterator;
+        typedef iterator<const Node, direction::REVERSE> reverse_const_iterator;
 
         const_iterator cbegin() const;
         iterator begin() const;
@@ -133,11 +136,11 @@ namespace datastructs
         const_iterator cend() const;
         iterator end() const;
 
-        const_iterator crbegin() const;
-        iterator rbegin() const;
+        const_reverse_iterator crbegin() const;
+        reverse_iterator rbegin() const;
 
-        const_iterator crend() const;
-        iterator rend() const;
+        const_reverse_iterator crend() const;
+        reverse_iterator rend() const;
 
         // Capacity
         size_t size() const;
@@ -151,7 +154,7 @@ namespace datastructs
         
 
     };
-`
+
 
 } // end namespace datastructs
 
