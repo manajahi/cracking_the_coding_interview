@@ -27,7 +27,7 @@
 
 namespace datastructs
 {
-    enum class direction {FORWARD, REVERSE};
+    enum class Direction {FORWARD, REVERSE};
 
     template<enum class E>
     struct direction_selector
@@ -47,7 +47,7 @@ namespace datastructs
     };
 
     template<>
-    struct direction_selector<direction::REVERSE>
+    struct direction_selector<Direction::REVERSE>
     {
         template<typename N>
         static N * moveToNext(N * _node)

@@ -124,11 +124,11 @@ namespace datastructs
             }
         };
 
-        typedef iterator<Node, direction::FORWARD> iterator;
-        typedef iterator<const Node, direction::FORWARD> const_iterator;
+        typedef iterator<Node, direction::forward> iterator;
+        typedef iterator<const Node, direction::forward> const_iterator;
 
-        typedef iterator<Node, direction::REVERSE> reverse_iterator;
-        typedef iterator<const Node, direction::REVERSE> reverse_const_iterator;
+        typedef iterator<Node, direction::reverse> reverse_iterator;
+        typedef iterator<const Node, direction::reverse> reverse_const_iterator;
 
         const_iterator cbegin() const;
         iterator begin() const;
