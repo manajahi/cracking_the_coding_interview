@@ -13,7 +13,7 @@ int main(int argc, const char **argv)
     _list.push_back(50);
     _list.push_front(60);
 
-    for(auto iter = _list.begin(); iter != iter.end; ++iter){
+    for(auto iter = _list.begin(); iter != _list.end(); ++iter){
         *iter = 0;
     }
 

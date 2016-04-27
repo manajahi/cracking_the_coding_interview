@@ -22,8 +22,7 @@
 #ifndef DATA_STRUCTS_LINKEDLIST_HH
 #define DATA_STRUCTS_LINKEDLIST_HH
 
-#include<iterator>
-#include "iterator_traits.hh"
+#include "list_iterators.hh"
 
 namespace datastructs
 {
@@ -35,22 +34,22 @@ namespace datastructs
 
         struct Node
         {
-            T data;
-            Node * next, * previous;
+            T _data;
+            Node * _next, * _previous;
 
             Node(const T& data, Node * next, Node * previous)
-                : data(data)
-                , next(next)
-                , previous(previous) {}
+                : _data(data)
+                , _next(next)
+                , _previous(previous) {}
                 
             Node(T&& data, Node * next, Node * previous)
-                : data(std::move(data))
-                , next(next)
-                , previous(previous) {}
+                : _data(std::move(data))
+                , _next(next)
+                , _previous(previous) {}
         };
 
-        size_t elems = 0;
-        Node * head, * tail;
+        size_t _elems = 0;
+        Node * _head, * _tail;
 
       public:
 
@@ -69,61 +68,10 @@ namespace datastructs
         void clear();
 
         // Iterators
-        template<typename N, datastructs::direction D>
-        class ListIterator : public std::iterator<std::bidirectional_iterator_tag, N>
-        {
-            N * _node;
-          public:
-            ListIterator(const N * _node) : _node(_node) {}
-            ListIterator(const ListIterator& iter) : _node(iter._node) {}
-            
-            ListIterator& operator ++()
-            {
-                _node = _moveToNext<D>(_node);
-                return *this;
-            }
-
-
-            ListIterator operator ++(N)
-            {
-                ListIterator _iter(*this);
-                operator ++();
-                return _iter;
-            }
-
-            ListIterator& operator --()
-            {
-                _node = _moveToPrevious<D>(_node);
-                return *this;
-            }
-
-            ListIterator operator --(N)
-            {
-                ListIterator _iter(*this);
-                operator --();
-                return _iter;
-            }
-
-            ListIterator operator == (const ListIterator& rhs)
-            {
-                return _node->data == rhs.data;
-            }
-
-            ListIterator operator != (const ListIterator& rhs)
-            {
-                return _node->data != rhs.data;
-            }
-
-            T& operator *() 
-            {
-                return _node->data;
-            }
-        };
-
-        typedef ListIterator<Node, direction::forward> iterator;
-        typedef ListIterator<const Node, direction::forward> const_iterator;
-        typedef ListIterator<Node, direction::reverse> reverse_iterator;
-        typedef ListIterator<const Node, direction::reverse> const_reverse_iterator;
+        typedef listiterators::iterator<Node, listtraits::direction::forward> iterator;
+        typedef listiterators::iterator<const Node, listtraits::direction::forward> const_iterator;
+        typedef listiterators::iterator<Node, listtraits::direction::reverse> reverse_iterator;
+        typedef listiterators::iterator<const Node, listtraits::direction::reverse> const_reverse_iterator;
 
         const_iterator cbegin() const;
         iterator begin() const;

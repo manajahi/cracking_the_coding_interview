@@ -12,7 +12,7 @@
  * LinkedList_test is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU General Public License for more deails.
  *
  * You should have received a copy of the GNU General Public License
  * along with LinkedList_test.  If not, see <http://www.gnu.org/licenses/>.
@@ -30,9 +30,9 @@ namespace datastructs
         if (this != &rhs){
             clear();
 
-            elems = rhs.elems;
-            head = rhs.head;
-            tail = rhs.tail;
+            _elems = rhs._elems;
+            _head = rhs._head;
+            _tail = rhs._tail;
         }
         return *this;
     }
@@ -45,186 +45,186 @@ namespace datastructs
 
      // Modifiers
     template<typename T>
-    void LinkedList<T>::push_back(T&& item)
+    void LinkedList<T>::push_back(T&& data)
     {
-        Node * mNode = new Node(std::move(item), nullptr, tail);
-        reassign_tail(mNode);
-        ++elems;
+        Node * node = new Node(std::move(data), nullptr, _tail);
+        reassign_tail(node);
+        ++_elems;
     }
    
     template<typename T> 
-    void LinkedList<T>::push_back(const T& item)
+    void LinkedList<T>::push_back(const T& data)
     {
-       Node * mNode = new Node(item, nullptr, tail);
-       reassign_tail(mNode);
-       ++elems;
+       Node * node = new Node(data, nullptr, _tail);
+       reassign_tail(node);
+       ++_elems;
     }
 
     template<typename T>
-    void LinkedList<T>::push_front(T&& item)
+    void LinkedList<T>::push_front(T&& data)
     {
-        Node * mNode = new Node(std::move(item), head, nullptr);
-        reassign_head(mNode);
-        ++elems;
+        Node * node = new Node(std::move(data), _head, nullptr);
+        reassign_head(node);
+        ++_elems;
     }
 
     template<typename T>
-    void LinkedList<T>::push_front(const T& item)
+    void LinkedList<T>::push_front(const T& data)
     {
-        Node * mNode = new Node(item, head, nullptr);
-        reassign_head(mNode);
-        ++elems;
+        Node * node = new Node(data, _head, nullptr);
+        reassign_head(node);
+        ++_elems;
     }
 
     template<typename T> 
     void LinkedList<T>::pop_back()
     {   
-        if (tail != nullptr){
-            Node * _previous = tail->previous;
-            delete tail;
-            reassign_tail(_previous);
-            --elems;
+        if (_tail != nullptr){
+            Node * previous = _tail->_previous;
+            delete _tail;
+            reassign_tail(previous);
+            --_elems;
         }
     }
 
     template<typename T>
     void LinkedList<T>::pop_front()
     {   
-        if (head != nullptr) {
-            Node * _next = head->next;
-            delete head;
-            reassign_head(_next);
-            --elems;
+        if (_head != nullptr) {
+            Node * next = _head->_next;
+            delete _head;
+            reassign_head(next);
+            --_elems;
         }
     }
 
     template<typename T>
     void LinkedList<T>::swap(LinkedList<T>& x)
     {
-        std::swap(head, x.head);
-        std::swap(tail, x.tail);
-        std::swap(elems, x.elems);
+        std::swap(_head, x._head);
+        std::swap(_tail, x._tail);
+        std::swap(_elems, x._elems);
     }
     
     template<typename T>
     void LinkedList<T>::clear()
     {
-        Node * mNode = head;
-        while(mNode){
-            Node * nextNode = mNode->next;
-            delete mNode;
-            mNode = nextNode;
+        Node * node = _head;
+        while(node){
+            Node * _nextNode = node->_next;
+            delete node;
+            node = _nextNode;
         }
-        elems = 0;
-        tail = head = nullptr;
+        _elems = 0;
+        _tail = _head = nullptr;
     }
 
     // Iterators
     template<typename T>    
     typename LinkedList<T>::const_iterator LinkedList<T>::cbegin() const
     {
-        return const_iterator(*head);    
+        return const_iterator(*_head);    
     }
 
     template<typename T>
     typename LinkedList<T>::iterator LinkedList<T>::begin() const
     {
-        return iterator(*head);
+        return iterator(*_head);
     }
 
     template<typename T>
     typename LinkedList<T>::const_iterator LinkedList<T>::cend() const
     {
-        return const_iterator(tail->next);
+        return const_iterator(_tail->_next);
     }
 
     template<typename T>
     typename LinkedList<T>::iterator LinkedList<T>::end() const
     {
-        return iterator(tail->end);
+        return iterator(_tail->_next);
     }
 
     template<typename T>
     typename LinkedList<T>::const_reverse_iterator LinkedList<T>::crbegin() const
     {
-        return const_reverse_iterator(*tail);
+        return const_reverse_iterator(*_tail);
     }
 
     template<typename T>
     typename LinkedList<T>::reverse_iterator LinkedList<T>::rbegin() const
     {
-        return reverse_iterator(*tail); 
+        return reverse_iterator(*_tail); 
     }
 
     template<typename T>
     typename LinkedList<T>::const_reverse_iterator LinkedList<T>::crend() const
     {
-        return const_reverse_iterator(head->previous);
+        return const_reverse_iterator(_head->_previous);
     }
 
     template<typename T>
     typename LinkedList<T>::reverse_iterator LinkedList<T>::rend() const
     {
-        return reverse_iterator(head->previous);
+        return reverse_iterator(_head->_previous);
     }
 
     // Capacity
     template<typename T>
     size_t LinkedList<T>::size() const
     {
-        return elems;
+        return _elems;
     }
 
     template<typename T>
     bool LinkedList<T>::empty() const
     {
-        return head == nullptr;
+        return _head == nullptr;
     }
 
     // Element Access
     template<typename T>
     T& LinkedList<T>::front() 
     {
-        return head->item;
+        return _head->_data;
     }
 
     template<typename T>
     const T& LinkedList<T>::front() const
     {
-        return head->item;    
+        return _head->_data;    
     }
 
     template<typename T>
     T& LinkedList<T>::back() 
     {
-        return tail->item;
+        return _tail->_data;
     }
 
     template<typename T>
     const T& LinkedList<T>::back() const
     {
-        return tail->item;
+        return _tail->_data;
     }
 
     // Helper Functions
     template<typename T>
     void LinkedList<T>::reassign_tail(Node * const node)
     {
-        if (head == nullptr)
-            head = node;
-        if (tail != nullptr)
-            tail->next = node;
-        tail = node;
+        if (_head == nullptr)
+            _head = node;
+        if (_tail != nullptr)
+            _tail->_next = node;
+        _tail = node;
     }
 
     template<typename T>
     void LinkedList<T>::reassign_head(Node * const node)
     {
-        if (tail == nullptr)
-            tail = node;
-        if (head != nullptr)
-            head->previous = node;
-        head = node;
+        if (_tail == nullptr)
+            _tail = node;
+        if (_head != nullptr)
+            _head->_previous = node;
+        _head = node;
     }
 
 } // end namespace datastructs
