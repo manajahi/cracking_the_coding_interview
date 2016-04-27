@@ -123,13 +123,13 @@ namespace datastructs
     template<typename T>    
     typename LinkedList<T>::const_iterator LinkedList<T>::cbegin() const
     {
-        return const_iterator(*_head);    
+        return const_iterator(_head);    
     }
 
     template<typename T>
     typename LinkedList<T>::iterator LinkedList<T>::begin() const
     {
-        return iterator(*_head);
+        return iterator(_head);
     }
 
     template<typename T>
@@ -147,13 +147,13 @@ namespace datastructs
     template<typename T>
     typename LinkedList<T>::const_reverse_iterator LinkedList<T>::crbegin() const
     {
-        return const_reverse_iterator(*_tail);
+        return const_reverse_iterator(_tail);
     }
 
     template<typename T>
     typename LinkedList<T>::reverse_iterator LinkedList<T>::rbegin() const
     {
-        return reverse_iterator(*_tail); 
+        return reverse_iterator(_tail); 
     }
 
     template<typename T>
