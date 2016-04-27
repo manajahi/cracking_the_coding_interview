@@ -85,7 +85,7 @@ namespace datastructs
             N * _node;
           public:
             iterator(N * node) : _node(node) {}
-            iterator(iterator& iter) : _node(iter._node) {}
+            iterator(const iterator& iter) : _node(iter._node) {}
             
             iterator& operator ++()
             {
