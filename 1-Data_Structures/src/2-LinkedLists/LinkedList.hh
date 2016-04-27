@@ -148,8 +148,8 @@ namespace datastructs
         const T& back() const;
 
       private:
-        void reassign_head(const T * const node);
-        void reassign_tail(const T * const node);
+        void reassign_head(Node * const node);
+        void reassign_tail(Node * const node);
     };
 
 
