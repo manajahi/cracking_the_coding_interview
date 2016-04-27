@@ -89,7 +89,7 @@ namespace datastructs
             
             iterator& operator ++()
             {
-                _node = listtraits::moveToNext<D>(_node);
+                _node = listtraits::moveToNext<N,D>(_node);
                 return *this;
             }
 
@@ -102,7 +102,7 @@ namespace datastructs
 
             iterator& operator --()
             {
-                _node = listtraits::moveToPrevious<D>(_node);
+                _node = listtraits::moveToPrevious<N,D>(_node);
                 return *this;
             }
 
