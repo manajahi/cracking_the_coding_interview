@@ -80,7 +80,7 @@ namespace datastructs
             ListIterator& operator ++()
             {
                 _node = _moveToNext<D>(_node);
-                return _node->data;
+                return *this;
             }
 
 
@@ -88,13 +88,13 @@ namespace datastructs
             {
                 ListIterator _iter(*this);
                 operator ++();
-                return *_iter;
+                return _iter;
             }
 
             ListIterator& operator --()
             {
                 _node = _moveToPrevious<D>(_node);
-                return _node->data;
+                return *this;
             }
 
             ListIterator operator --(N)
