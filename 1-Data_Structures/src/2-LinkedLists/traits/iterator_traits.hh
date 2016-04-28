@@ -1,5 +1,5 @@
-/* NodeTraits.hh
- * Defines traits for double linked-list iterators
+/* iterator_traits.hh
+ * Defines traits for LinkedList iterators
  * 
  * This file is a part of 1-Data_Structures.
  *
@@ -18,17 +18,23 @@
  * (C) 2016, E. Higham
  */
 
-#ifndef DATA_STRUCTS_LIST_ITERATORS_HH
-#define DATA_STRUCTS_LIST_ITERATORS_HH
+#ifndef DATA_STRUCTS_LINKEDLISTS_TRAITS_ITERATOR_HH
+#define DATA_STRUCTS_LINKEDLISTS_TRAITS_ITERATOR_HH
 
-#ifdef DATA_STRUCTS_LINKEDLIST_HH
+#ifdef DATA_STRUCTS_LINKEDLISTS
 
 #include <iterator>
 
 namespace datastructs
 {
-    namespace listtraits
+    namespace linkedlists
     {
+        enum class iterator_tag
+        {
+            std::forward_iterator_tag,
+            std::bidirectional_iterator_tag
+        };        
+
         enum class direction {forward, reverse};
 
         template<direction D>
@@ -46,7 +52,7 @@ namespace datastructs
                 return node->_previous;
             } 
         };
-        
+
         template<>
         struct direction_selector<direction::reverse>
         {
@@ -55,82 +61,27 @@ namespace datastructs
             {
                 return node->_previous;
             }
-    
+
             template<typename N>
             static N * moveToPrevious(N * node)
             {
                 return node->_next;
             }
         };
-        
+
         template<typename N, direction D>
         N * moveToNext(N * node)
         {
             return direction_selector<D>::moveToNext(node);
         }
-        
+
         template<typename N, direction D>
         N * moveToPrevious(N * node)
         {                                                             
             return direction_selector<D>::moveToPrevious(node);
         }
-    } // namespace listtraits
+    } // !linkedlists
+} // !datastructs
 
-    namespace listiterators
-    {
-
-        template<typename N, listtraits::direction D>
-        struct iterator : public std::iterator<std::bidirectional_iterator_tag, N>
-        {
-            N * _node;
-          public:
-            iterator(N * node) : _node(node) {}
-            iterator(const iterator& iter) : _node(iter._node) {}
-            
-            iterator& operator ++()
-            {
-                _node = listtraits::moveToNext<N,D>(_node);
-                return *this;
-            }
-
-            iterator operator ++(int)
-            {
-                iterator iter(*this);
-                operator ++();
-                return iter;
-            }
-
-            iterator& operator --()
-            {
-                _node = listtraits::moveToPrevious<N,D>(_node);
-                return *this;
-            }
-
-            iterator operator --(int)
-            {
-                iterator iter(*this);
-                operator --();
-                return iter;
-            }
-
-            bool operator == (const iterator& rhs)
-            {
-                return _node == rhs._node;
-            }
-
-            bool operator != (const iterator& rhs)
-            {
-                return _node != rhs._node;
-            }
-
-            decltype(_node->_data)& operator *() 
-            {
-                return _node->_data;
-            }
-        };
-
-    } //namespace listiterators
-} // namespace datastructs
-
-#endif // DATA_STRUCTS_LINKEDLIST_HH
-#endif // DATA_STRUCTS_LIST_ITERATORS_HH
+#endif // DATA_STRUCTS_LINKEDLISTS
+#endif // DATA_STRUCTS_LINKEDLISTS_TRAITS_ITERATOR_HH
