@@ -23,9 +23,9 @@
 #ifndef DATA_STRUCTS_LINKEDLISTS_LIST_HH
 #define DATA_STRUCTS_LINKEDLISTS_LIST_HH
 
-#ifndef DATA_STRUCTS_LINKEDLISTS
-#define DATA_STRUCTS_LINKEDLISTS
-#endif
+# ifndef DATA_STRUCTS_LINKEDLISTS
+# define DATA_STRUCTS_LINKEDLISTS
+# endif
 
 #include "common.hh"
 #include "traits/list_traits.hh"
@@ -34,7 +34,7 @@ namespace datastructs
 {
     namespace linkedlists
     {
-        template<typename T, linkdirection L>
+        template<typename T, LiaisonType L>
         class List
         {
             private:

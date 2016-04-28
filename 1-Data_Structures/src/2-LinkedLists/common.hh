@@ -26,9 +26,9 @@
 #define DATA_STRUCTS_LINKEDLISTS
 #endif
 
-#include "traits/iterator.hh"
+#include "traits/iterator_traits.hh"
 #include <iterator>
-#include <utils.hh>
+#include "utils.hh"
 
 #define CONST_IF_CONST(N, T) \
 typename utils::conditional_t(utils::is_const<N>::value, const T, T)
@@ -98,7 +98,7 @@ namespace datastructs
     } // !linkedlists
 } // !datastructs
 
-#undef CONST_IF_CONST(N, T)
+#undef CONST_IF_CONST
 
 #endif // DATA_STRUCTS_LINKEDLISTS
 #endif // DATA_STRUCTS_LINKEDLISTS_COMMON_HH

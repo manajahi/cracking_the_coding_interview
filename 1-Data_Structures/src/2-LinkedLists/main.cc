@@ -1,11 +1,11 @@
-#include "LinkedList.hh"
+#include "List.hh"
 #include <iostream>
 
 using namespace datastructs;
 
 int main(int argc, const char **argv)
 {
-    LinkedList<int> _list = LinkedList<int>();
+    auto _list = List<int, doubly>();
     _list.push_back(10);
     _list.push_back(20);
     _list.push_front(0);
