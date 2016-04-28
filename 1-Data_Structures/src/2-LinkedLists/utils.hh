@@ -63,10 +63,10 @@ namespace datastructs
             };
 
             template<bool B, typename T>
-            using enable_if_t = enable_if<B, T>::type;
+            using enable_if_t = typename enable_if<B, T>::type;
 
             template<bool B, typename T, typename F>
-            using conditional_t = conditional<B, T, F>::type;
+            using conditional_t = typename conditional<B, T, F>::type;
 
         } // !utils
 

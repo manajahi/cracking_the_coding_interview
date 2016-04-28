@@ -31,8 +31,8 @@ namespace datastructs
     {
         enum class iterator_tag
         {
-            std::forward_iterator_tag,
-            std::bidirectional_iterator_tag
+            forward_iterator_tag,
+            bidirectional_iterator_tag
         };        
 
         enum class direction {forward, reverse};

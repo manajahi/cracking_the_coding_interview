@@ -1,5 +1,5 @@
-/* common.hh
- * Defines common data types in 2-LinkedLists
+/* iterator.hh
+ * Defines iterator data types in 2-LinkedLists
  * 
  * This file is a part of 1-Data_Structures.
  *
@@ -19,8 +19,8 @@
  * (C) 2016, E. Higham
  */
 
-#ifndef DATA_STRUCTS_LINKEDLISTS_COMMON_HH
-#define DATA_STRUCTS_LINKEDLISTS_COMMON_HH
+#ifndef DATA_STRUCTS_LINKEDLISTS_ITERATOR_HH
+#define DATA_STRUCTS_LINKEDLISTS_ITERATOR_HH
 
 #ifndef DATA_STRUCTS_LINKEDLISTS
 #define DATA_STRUCTS_LINKEDLISTS
@@ -37,7 +37,7 @@ namespace datastructs
 {
     namespace linkedlists
     {
-        namespace common
+        namespace iterator
         {
             template<typename N,
                      linkedlists::iterator_tag TAG,
@@ -94,11 +94,10 @@ namespace datastructs
                 }
             };
 
-        } // !common
+        } // !iterator
     } // !linkedlists
 } // !datastructs
 
 #undef CONST_IF_CONST
 
-#endif // DATA_STRUCTS_LINKEDLISTS
 #endif // DATA_STRUCTS_LINKEDLISTS_COMMON_HH
