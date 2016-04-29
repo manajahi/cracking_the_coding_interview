@@ -27,8 +27,8 @@ namespace datastructs
 {
     namespace linkedlists
     {
-        template<typename T>
-        List<T>& List<T>::operator = (const List<T>& rhs)
+        template<typename T, LiaisonType L>
+        List<T, L>& List<T, L>::operator = (const List<T, L>& rhs)
         {
             if (this != &rhs){
                 clear();
@@ -40,47 +40,47 @@ namespace datastructs
             return *this;
         }
 
-        template<typename T> 
-        List<T>::~List()
+        template<typename T, LiaisonType L>
+        List<T, L>::~List()
         {
             clear();
         }
 
         // Modifiers
-        template<typename T>
-        void List<T>::push_back(T&& data)
+        template<typename T, LiaisonType L>
+        void List<T, L>::push_back(T&& data)
         {
             Node * node = new Node(std::move(data), nullptr, _tail);
             reassign_tail(node);
             ++_elems;
         }
 
-        template<typename T> 
-        void List<T>::push_back(const T& data)
+        template<typename T, LiaisonType L>
+        void List<T, L>::push_back(const T& data)
         {
             Node * node = new Node(data, nullptr, _tail);
             reassign_tail(node);
             ++_elems;
         }
 
-        template<typename T>
-        void List<T>::push_front(T&& data)
+        template<typename T, LiaisonType L>
+        void List<T, L>::push_front(T&& data)
         {
             Node * node = new Node(std::move(data), _head, nullptr);
             reassign_head(node);
             ++_elems;
         }
 
-        template<typename T>
-        void List<T>::push_front(const T& data)
+        template<typename T, LiaisonType L>
+        void List<T, L>::push_front(const T& data)
         {
             Node * node = new Node(data, _head, nullptr);
             reassign_head(node);
             ++_elems;
         }
 
-        template<typename T> 
-        void List<T>::pop_back()
+        template<typename T, LiaisonType L>
+        void List<T, L>::pop_back()
         {   
             if (_tail != nullptr){
                 Node * previous = _tail->_previous;
@@ -90,8 +90,8 @@ namespace datastructs
             }
         }
 
-        template<typename T>
-        void List<T>::pop_front()
+        template<typename T, LiaisonType L>
+        void List<T, L>::pop_front()
         {   
             if (_head != nullptr) {
                 Node * next = _head->_next;
@@ -101,16 +101,16 @@ namespace datastructs
             }
         }
 
-        template<typename T>
-        void List<T>::swap(List<T>& x)
+        template<typename T, LiaisonType L>
+        void List<T, L>::swap(List<T, L>& x)
         {
             std::swap(_head, x._head);
             std::swap(_tail, x._tail);
             std::swap(_elems, x._elems);
         }
 
-        template<typename T>
-        void List<T>::clear()
+        template<typename T, LiaisonType L>
+        void List<T, L>::clear()
         {
             Node * node = _head;
             while(node){
@@ -123,95 +123,95 @@ namespace datastructs
         }
 
         // Iterators
-        template<typename T>    
-        typename List<T>::const_iterator List<T>::cbegin() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::const_iterator List<T, L>::cbegin() const
         {
             return const_iterator(_head);    
         }
 
-        template<typename T>
-        typename List<T>::iterator List<T>::begin() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::iterator List<T, L>::begin() const
         {
             return iterator(_head);
         }
 
-        template<typename T>
-        typename List<T>::const_iterator List<T>::cend() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::const_iterator List<T, L>::cend() const
         {
             return const_iterator(_tail->_next);
         }
 
-        template<typename T>
-        typename List<T>::iterator List<T>::end() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::iterator List<T, L>::end() const
         {
             return iterator(_tail->_next);
         }
 
-        template<typename T>
-        typename List<T>::const_reverse_iterator List<T>::crbegin() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::const_reverse_iterator List<T, L>::crbegin() const
         {
             return const_reverse_iterator(_tail);
         }
 
-        template<typename T>
-        typename List<T>::reverse_iterator List<T>::rbegin() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::reverse_iterator List<T, L>::rbegin() const
         {
             return reverse_iterator(_tail); 
         }
 
-        template<typename T>
-        typename List<T>::const_reverse_iterator List<T>::crend() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::const_reverse_iterator List<T, L>::crend() const
         {
             return const_reverse_iterator(_head->_previous);
         }
 
-        template<typename T>
-        typename List<T>::reverse_iterator List<T>::rend() const
+        template<typename T, LiaisonType L>
+        typename List<T, L>::reverse_iterator List<T, L>::rend() const
         {
             return reverse_iterator(_head->_previous);
         }
 
         // Capacity
-        template<typename T>
-        size_t List<T>::size() const
+        template<typename T, LiaisonType L>
+        size_t List<T, L>::size() const
         {
             return _elems;
         }
 
-        template<typename T>
-        bool List<T>::empty() const
+        template<typename T, LiaisonType L>
+        bool List<T, L>::empty() const
         {
             return _head == nullptr;
         }
 
         // Element Access
-        template<typename T>
-        T& List<T>::front() 
+        template<typename T, LiaisonType L>
+        T& List<T, L>::front() 
         {
             return _head->_data;
         }
 
-        template<typename T>
-        const T& List<T>::front() const
+        template<typename T, LiaisonType L>
+        const T& List<T, L>::front() const
         {
             return _head->_data;    
         }
 
-        template<typename T>
-        T& List<T>::back() 
+        template<typename T, LiaisonType L>
+        T& List<T, L>::back() 
         {
             return _tail->_data;
         }
 
-        template<typename T>
-        const T& List<T>::back() const
+        template<typename T, LiaisonType L>
+        const T& List<T, L>::back() const
         {
             return _tail->_data;
         }
 
         // Helper Functions
-        template<typename T>
-        void List<T>::reassign_tail(Node * const node)
+        template<typename T, LiaisonType L>
+        void List<T, L>::reassign_tail(Node * const node)
         {
             if (_head == nullptr)
                 _head = node;
@@ -220,8 +220,8 @@ namespace datastructs
             _tail = node;
         }
 
-        template<typename T>
-        void List<T>::reassign_head(Node * const node)
+        template<typename T, LiaisonType L>
+        void List<T, L>::reassign_head(Node * const node)
         {
             if (_tail == nullptr)
                 _tail = node;

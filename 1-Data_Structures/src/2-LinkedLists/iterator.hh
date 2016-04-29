@@ -31,28 +31,28 @@
 #include "utils.hh"
 
 #define CONST_IF_CONST(N, T) \
-typename utils::conditional_t(utils::is_const<N>::value, const T, T)
+typename utils::conditional_t<utils::is_const<N>::value, const T, T>
 
 namespace datastructs
 {
     namespace linkedlists
     {
-        namespace iterator
+        namespace iterators
         {
             template<typename N,
-                     linkedlists::iterator_tag TAG,
+                     typename TAG,
                      linkedlists::direction D
                     >
-            class iterator : public std::iterator<typename TAG, N>
+            class iterator : public std::iterator<TAG, N>
             {
                 N * _node;
                 public:
                 iterator(N * node) : _node(node) {}
-                iterator(const iterator& iter) : node(iter._node) {}
+                iterator(const iterator& iter) : _node(iter._node) {}
 
                 iterator& operator ++()
                 {
-                    _node = listtraits::moveToNext<N,D>(_node);
+                    _node = moveToNext<N,D>(_node);
                     return *this;
                 }
 
@@ -65,7 +65,7 @@ namespace datastructs
 
                 iterator& operator --()
                 {
-                    _node = listtraits::moveToPrevious<N,D>(_node);
+                    _node = moveToPrevious<N,D>(_node);
                     return *this;
                 }
 

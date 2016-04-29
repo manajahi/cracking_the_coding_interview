@@ -1,11 +1,11 @@
 #include "List.hh"
 #include <iostream>
 
-using namespace datastructs;
+using namespace datastructs::linkedlists;
 
 int main(int argc, const char **argv)
 {
-    auto _list = List<int, doubly>();
+    auto _list = List<int, LiaisonType::doubly>();
     _list.push_back(10);
     _list.push_back(20);
     _list.push_front(0);

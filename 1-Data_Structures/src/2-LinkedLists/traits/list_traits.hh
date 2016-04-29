@@ -31,7 +31,19 @@ namespace datastructs
         {
             singly,
             doubly
-        };        
+        };
+
+        template<LiaisonType L>
+        struct is_doubly_linked
+        {
+            static const bool value = false;
+        };
+
+        template<>
+        struct is_doubly_linked<LiaisonType::doubly>
+        {
+            static const bool value = true;
+        };
 
     } // !linkedlists
 } // !datastructs

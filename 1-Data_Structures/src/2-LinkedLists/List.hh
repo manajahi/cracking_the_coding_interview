@@ -27,9 +27,13 @@
 # define DATA_STRUCTS_LINKEDLISTS
 # endif
 
-#include "common.hh"
+#include "iterator.hh"
 #include "traits/list_traits.hh"
 
+#define SET_TAG(L) \
+typename utils::conditional_t<is_doubly_linked<L>::value, \
+                              std::bidirectional_iterator_tag, \
+                              std::forward_iterator_tag>
 namespace datastructs
 {
     namespace linkedlists
@@ -60,7 +64,7 @@ namespace datastructs
 
             public:
 
-                List<T>& operator = (const List<T>&);
+                List& operator = (const List&);
 
                 ~List();
 
@@ -71,14 +75,14 @@ namespace datastructs
                 void push_front(const T& data);
                 void pop_back();
                 void pop_front();
-                void swap(List<T>& x);
+                void swap(List& x);
                 void clear();
 
                 // Iterators
-                typedef common::iterator<Node, direction::forward>       iterator;
-                typedef common::iterator<const Node, direction::forward> const_iterator;
-                typedef common::iterator<Node, direction::reverse>       reverse_iterator;
-                typedef common::iterator<const Node, direction::reverse> const_reverse_iterator;
+                typedef iterators::iterator<Node, SET_TAG(L), direction::forward>       iterator;
+                typedef iterators::iterator<const Node, SET_TAG(L), direction::forward> const_iterator;
+                typedef iterators::iterator<Node, SET_TAG(L), direction::reverse>       reverse_iterator;
+                typedef iterators::iterator<const Node, SET_TAG(L), direction::reverse> const_reverse_iterator;
 
                 const_iterator cbegin() const;
                 iterator begin() const;
@@ -111,5 +115,7 @@ namespace datastructs
 } // !datastructs
 
 #include "List.hpp"
+
+#undef SET_TAG
 
 #endif // DATA_STRUCTS_LINKEDLISTS_LIST_HH
