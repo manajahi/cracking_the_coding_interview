@@ -1,5 +1,5 @@
 /* List.hh
- * Defines a template for a double linked-list
+ * Defines the type definition of list and forward_list
  * Modelled on std::list
  * 
  * This file is a part of 1-Data_Structures.
@@ -23,10 +23,6 @@
 #ifndef DATA_STRUCTS_LINKEDLISTS_LIST_HH
 #define DATA_STRUCTS_LINKEDLISTS_LIST_HH
 
-# ifndef DATA_STRUCTS_LINKEDLISTS
-# define DATA_STRUCTS_LINKEDLISTS
-# endif
-
 #include "iterator.hh"
 #include "traits/list_traits.hh"
 
@@ -36,82 +32,89 @@ typename utils::conditional_t<is_doubly_linked<L>::value, \
                               std::forward_iterator_tag>
 namespace datastructs
 {
+
     namespace linkedlists
     {
-        template<typename T, LiaisonType L>
+        template<typename T, LinkType L>
         class List
         {
-            private:
+          private:
 
-                struct Node
-                {
-                    T _data;
-                    Node * _next, * _previous;
+            struct Node
+            {
+                T _data;
+                Node * _next, * _previous;
 
-                    Node(const T& data, Node * next, Node * previous)
-                    : _data(data)
-                      , _next(next)
-                      , _previous(previous) {}
+                Node(const T& data, Node * next, Node * previous)
+                : _data(data)
+                , _next(next)
+                , _previous(previous) {}
 
-                    Node(T&& data, Node * next, Node * previous)
-                    : _data(std::move(data))
-                      , _next(next)
-                      , _previous(previous) {}
-                };
+                Node(T&& data, Node * next, Node * previous)
+                : _data(std::move(data))
+                , _next(next)
+                , _previous(previous) {}
+            };
 
-                size_t _elems = 0;
-                Node * _head, * _tail;
+            size_t _elems = 0;
+            Node * _head, * _tail;
 
-            public:
+          public:
 
-                List& operator = (const List&);
+            List& operator = (const List&);
 
-                ~List();
+            ~List();
 
-                // Modifiers
-                void push_back(T&& data);
-                void push_back(const T& data);
-                void push_front(T&& data);
-                void push_front(const T& data);
-                void pop_back();
-                void pop_front();
-                void swap(List& x);
-                void clear();
+            // Modifiers
+            void push_back(T&& data);
+            void push_back(const T& data);
+            void push_front(T&& data);
+            void push_front(const T& data);
+            void pop_back();
+            void pop_front();
+            void swap(List& x);
+            void clear();
 
-                // Iterators
-                typedef iterators::iterator<Node, SET_TAG(L), direction::forward>       iterator;
-                typedef iterators::iterator<const Node, SET_TAG(L), direction::forward> const_iterator;
-                typedef iterators::iterator<Node, SET_TAG(L), direction::reverse>       reverse_iterator;
-                typedef iterators::iterator<const Node, SET_TAG(L), direction::reverse> const_reverse_iterator;
+            // Iterators
+            typedef iterators::iterator<Node, SET_TAG(L), direction::forward>       iterator;
+            typedef iterators::iterator<const Node, SET_TAG(L), direction::forward> const_iterator;
+            typedef iterators::iterator<Node, SET_TAG(L), direction::reverse>       reverse_iterator;
+            typedef iterators::iterator<const Node, SET_TAG(L), direction::reverse> const_reverse_iterator;
 
-                const_iterator cbegin() const;
-                iterator begin() const;
+            const_iterator cbegin() const;
+            iterator begin() const;
 
-                const_iterator cend() const;
-                iterator end() const;
+            const_iterator cend() const;
+            iterator end() const;
 
-                const_reverse_iterator crbegin() const;
-                reverse_iterator rbegin() const;
+            const_reverse_iterator crbegin() const;
+            reverse_iterator rbegin() const;
 
-                const_reverse_iterator crend() const;
-                reverse_iterator rend() const;
+            const_reverse_iterator crend() const;
+            reverse_iterator rend() const;
 
-                // Capacity
-                size_t size() const;
-                bool empty() const;
+            // Capacity
+            size_t size() const;
+            bool empty() const;
 
-                // Element Access
-                T& front();
-                const T& front() const;
-                T& back();
-                const T& back() const;
+            // Element Access
+            T& front();
+            const T& front() const;
+            T& back();
+            const T& back() const;
 
-            private:
-                void reassign_head(Node * const node);
-                void reassign_tail(Node * const node);
+          private:
+            void reassign_head(Node * const node);
+            void reassign_tail(Node * const node);
         };
-
     } // !linkedlists
+
+    template<typename T>
+    using forward_list = linkedlists::List<T, linkedlists::LinkType::singly>;
+
+    template<typename T>
+    using list = linkedlists::List<T, linkedlists::LinkType::doubly>;
+
 } // !datastructs
 
 #include "List.hpp"

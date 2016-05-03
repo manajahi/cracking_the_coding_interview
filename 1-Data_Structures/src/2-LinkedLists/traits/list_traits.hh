@@ -21,26 +21,26 @@
 #ifndef DATA_STRUCTS_LINKEDLISTS_TRAITS_LIST_HH
 #define DATA_STRUCTS_LINKEDLISTS_TRAITS_LIST_HH
 
-#ifdef DATA_STRUCTS_LINKEDLISTS
+#ifdef DATA_STRUCTS_LINKEDLISTS_LIST_HH
 
 namespace datastructs
 {
     namespace linkedlists
     {
-        enum class LiaisonType
+        enum class LinkType
         {
             singly,
             doubly
         };
 
-        template<LiaisonType L>
+        template<LinkType L>
         struct is_doubly_linked
         {
             static const bool value = false;
         };
 
         template<>
-        struct is_doubly_linked<LiaisonType::doubly>
+        struct is_doubly_linked<LinkType::doubly>
         {
             static const bool value = true;
         };
@@ -48,5 +48,5 @@ namespace datastructs
     } // !linkedlists
 } // !datastructs
 
-#endif // DATA_STRUCTS_LINKEDLISTS
+#endif // DATA_STRUCTS_LINKEDLISTS_LIST_HH
 #endif // DATA_STRUCTS_LINKEDLISTS_TRAITS_LIST_HH

@@ -22,10 +22,6 @@
 #ifndef DATA_STRUCTS_LINKEDLISTS_ITERATOR_HH
 #define DATA_STRUCTS_LINKEDLISTS_ITERATOR_HH
 
-#ifndef DATA_STRUCTS_LINKEDLISTS
-#define DATA_STRUCTS_LINKEDLISTS
-#endif
-
 #include "traits/iterator_traits.hh"
 #include <iterator>
 #include "utils.hh"
@@ -46,7 +42,8 @@ namespace datastructs
             class iterator : public std::iterator<TAG, N>
             {
                 N * _node;
-                public:
+              
+              public:
                 iterator(N * node) : _node(node) {}
                 iterator(const iterator& iter) : _node(iter._node) {}
 
