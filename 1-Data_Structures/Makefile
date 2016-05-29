@@ -1,35 +1,98 @@
-# Makefile for 1-Data_Structures
-# This file is a part of 1-Data_Structures.
+# Makefile for cracking_the_coding_interview/1-Data_Structures/2-LinkedLists
 #
-# 1-Data_Structures is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Defines the build configuration targets and recipes thereof
 #
-# 1-Data_Structures is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# Copyright 2016 Edmund Highan
 #
-# You should have received a copy of the GNU General Public License
-# along with 1-Data_Structures.  If not, see <http://www.gnu.org/licenses/>.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# (C) 2016, E. Higham
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-CC := g++
-STD := -std=c++11 
-CXXFLAGS = $STD 
+CCFLAGS=-std=c++11 $(INLINE_WARN) $(INLINE_LIMIT) -pthread -Wall
+OPTIM = -O3 -march=native -DNDEBUG 
+DEBUG = -O0 -g -Wall -Wextra -Wconversion
+GPP=g++
+BASEDIR=.
+OBJDIR=$(BASEDIR)/obj
+BIN=$(BASEDIR)
+SRCDIR=src
+RESDIR=$(SRCDIR)/resource
+LIBCINC= -I.
+LIBLINC= -L. 
+LIBLINK= -lm #-lgsl -lgslcblas #-lgmp -lmpfr
+
+CFLAGS=$(CCFLAGS)  -Wall  $(LIBCINC) 
+LFLAGS=$(CCFLAGS)  -Wall  $(LIBLINC)
+
+#############################################################################
+#add non-executables .c files to OBJS 
+#if .c file reside in a dir other than the current one, add .o rule below
+OBJS=$(OBJDIR)/strings.o \
+		 $(OBJDIR)/tuple.o \
+		 $(OBJDIR)/var.o \
+		 $(OBJDIR)/run.o 
 
 
-ifdef DEBUG
-CXXFLAGS += -g
-OPTIM = -O0
-else
+##############################################################################
+#EXECUTABLES: add executables rules here
+
+.PHONY: release all test debug
+
+release: CFLAGS +=$(OPTIM)
+release: search
+	@echo "release: build successful"
+
+all: CFLAGS += $(OPTIM)
+all: search
+all: test
+	@echo "all: build successful"
+
+debug: CFLAGS += $(DEBUG)
+debug: search
+	@echo "debug: build successful"
 
 
-all: 
-$(CC) $(CXXFLAGS) $(OPTIM)
+test:
+	make -f test/Makefile
 
+search: $(OBJDIR)/search.oo
+	ln -s $(OBJDIR)/search.oo $(BIN)/run
+
+%.oo: %.o $(OBJS) $(LIBS)
+	echo $<
+	$(GPP) $(LFLAGS) -o $@ $(OBJS) $< $(LIBLINK)
+
+$(OBJDIR)/search.o: $(SRCDIR)/main.c
+	mkdir -p obj
+	$(GPP) $(CFLAGS) -o $(OBJDIR)/search.o -c $(SRCDIR)/main.c
+
+
+##############################################################################
+# add non-executables .o rules here
+
+$(OBJDIR)/strings.o: $(RESDIR)/strings.c
+	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+
+$(OBJDIR)/tuple.o: $(SRCDIR)/tuple.c
+	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+
+$(OBJDIR)/var.o: $(SRCDIR)/var.c
+	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+
+
+$(OBJDIR)/run.o: $(SRCDIR)/run.c
+	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+
+###############################################################################
 
 clean:
-
+	@rm -f $(OBJDIR)/*.o $(OBJDIR)/*.oo $(SRCDIR)/*~ 
