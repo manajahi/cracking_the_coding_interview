@@ -1,4 +1,4 @@
-# Makefile for cracking_the_coding_interview/1-Data_Structures/
+# Makefile for cracking_the_coding_interview/1-Data_Structures/2-LinkedLists
 #
 # Defines the build configuration targets and recipes thereof
 #
