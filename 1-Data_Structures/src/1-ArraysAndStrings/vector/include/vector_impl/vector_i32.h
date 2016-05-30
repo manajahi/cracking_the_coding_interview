@@ -43,7 +43,7 @@ i32 * vector_i32_data(vector_i32 * NO_ALIAS vector);
 const bool vector_i32_empty(vector_i32 * NO_ALIAS vector);
 const size_t vector_i32_size(vector_i32 * NO_ALIAS vector);
 const size_t vector_i32_capacity(vector_i32 * NO_ALIAS vector);
-void vector_i32_reserve(vector_i32 * NO_ALIAS vector, size_t size);
+const bool vector_i32_reserve(vector_i32 * NO_ALIAS vector, size_t size);
 void vector_i32_shrink_to_fit(vector_i32 * NO_ALIAS vector);
 void vector_i32_free(vector_i32 * NO_ALIAS vector);
 
