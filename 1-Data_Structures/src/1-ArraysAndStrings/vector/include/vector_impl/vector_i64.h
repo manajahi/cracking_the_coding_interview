@@ -1,5 +1,5 @@
 /* vector_i64.h
- * Defines a C implementation of std::vector<int32_t>
+ * Defines a C implementation of std::vector<int64_t>
  * 
  * Copyright 2016 Edmund Highan
  *
@@ -20,6 +20,7 @@
 #define ARRAYS_AND_STRINGS_INCLUDE_VECTOR_IMPL_VECTOR_I64_H
 
 #include "../c_types.h"
+#include "common.h"
 
 #define NO_ALIAS const __restrict
 
@@ -30,6 +31,10 @@ typedef struct
     __attribute__((aligned(16)))
     i64 * data;
 } vector_i64;
+
+// Constructor
+
+vector_i64 * new_vector_i64();
 
 // Element Access
 
@@ -43,7 +48,7 @@ i64 * vector_i64_data(vector_i64 * NO_ALIAS vector);
 const bool vector_i64_empty(vector_i64 * NO_ALIAS vector);
 const size_t vector_i64_size(vector_i64 * NO_ALIAS vector);
 const size_t vector_i64_capacity(vector_i64 * NO_ALIAS vector);
-void vector_i64_reserve(vector_i64 * NO_ALIAS vector, size_t size);
+const bool vector_i64_reserve(vector_i64 * NO_ALIAS vector, size_t size);
 void vector_i64_shrink_to_fit(vector_i64 * NO_ALIAS vector);
 void vector_i64_free(vector_i64 * NO_ALIAS vector);
 
@@ -52,11 +57,11 @@ void vector_i64_free(vector_i64 * NO_ALIAS vector);
 void vector_i64_clear(vector_i64 * NO_ALIAS vector);
 i64 * vector_i64_insert(vector_i64 * NO_ALIAS vector, size_t position, i64 value);
 i64 * vector_i64_push_back(vector_i64 * NO_ALIAS vector, i64 value);
-i64 * vector_i64_pop_back(vector_i64 * NO_ALIAS vector);
+void vector_i64_pop_back(vector_i64 * NO_ALIAS vector);
 i64 * vector_i64_push_front(vector_i64 * NO_ALIAS vector, i64 value);
-i64 * vector_i64_pop_front(vector_i64 * NO_ALIAS vector);
+void vector_i64_pop_front(vector_i64 * NO_ALIAS vector);
 i64 * vector_i64_resize(vector_i64 * NO_ALIAS vector, size_t size);
-i64 * vector_i64_swap(vector_i64 * NO_ALIAS vector1, vector_i64 * NO_ALIAS vector2);
+void vector_i64_swap(vector_i64 * NO_ALIAS vector1, vector_i64 * NO_ALIAS vector2);
 
 // Comparitors
 const bool vector_i64_equal(vector_i64 * NO_ALIAS vector1, vector_i64 * NO_ALIAS vector2);

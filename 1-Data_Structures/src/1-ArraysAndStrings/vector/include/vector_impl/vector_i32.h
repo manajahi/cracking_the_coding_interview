@@ -20,6 +20,7 @@
 #define ARRAYS_AND_STRINGS_INCLUDE_VECTOR_IMPL_VECTOR_I32_H
 
 #include "../c_types.h"
+#include "common.h"
 
 #define NO_ALIAS const __restrict
 
@@ -30,6 +31,9 @@ typedef struct
     __attribute__((aligned(16)))
     i32 * data;
 } vector_i32;
+
+// Constructor
+vector_i32 * new_vector_i32();
 
 // Element Access
 
@@ -52,11 +56,11 @@ void vector_i32_free(vector_i32 * NO_ALIAS vector);
 void vector_i32_clear(vector_i32 * NO_ALIAS vector);
 i32 * vector_i32_insert(vector_i32 * NO_ALIAS vector, size_t position, i32 value);
 i32 * vector_i32_push_back(vector_i32 * NO_ALIAS vector, i32 value);
-i32 * vector_i32_pop_back(vector_i32 * NO_ALIAS vector);
+void vector_i32_pop_back(vector_i32 * NO_ALIAS vector);
 i32 * vector_i32_push_front(vector_i32 * NO_ALIAS vector, i32 value);
-i32 * vector_i32_pop_front(vector_i32 * NO_ALIAS vector);
+void vector_i32_pop_front(vector_i32 * NO_ALIAS vector);
 i32 * vector_i32_resize(vector_i32 * NO_ALIAS vector, size_t size);
-i32 * vector_i32_swap(vector_i32 * NO_ALIAS vector1, vector_i32 * NO_ALIAS vector2);
+void vector_i32_swap(vector_i32 * NO_ALIAS vector1, vector_i32 * NO_ALIAS vector2);
 
 // Comparitors
 const bool vector_i32_equal(vector_i32 * NO_ALIAS vector1, vector_i32 * NO_ALIAS vector2);
