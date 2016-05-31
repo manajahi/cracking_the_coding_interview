@@ -17,82 +17,119 @@
 # limitations under the License.
 #
 
-CCFLAGS=-std=c++11 $(INLINE_WARN) $(INLINE_LIMIT) -pthread -Wall
+CFLAGS=-std=c11 $(INLINE_WARN) $(INLINE_LIMIT) -Wall -fpic
 OPTIM = -O3 -march=native -DNDEBUG 
-DEBUG = -O0 -g -Wall -Wextra -Wconversion
-GPP=g++
+DEBUG = -O0 -g -Wconversion
+CC=gcc
+AR=ar
+ARFLAGS=rcs
 BASEDIR=.
+INCLUDE=$(BASEDIR)/include:$(BASEDIR)/include/vector_impl
 OBJDIR=$(BASEDIR)/obj
-BIN=$(BASEDIR)
-SRCDIR=src
-RESDIR=$(SRCDIR)/resource
+LIBDIR=$(BASEDIR)/lib
+SRCDIR=$(BASEDIR)/src
+TESTDIR=$(BASEDIR)/test
 LIBCINC= -I.
 LIBLINC= -L. 
-LIBLINK= -lm #-lgsl -lgslcblas #-lgmp -lmpfr
+LIBLINK=
 
-CFLAGS=$(CCFLAGS)  -Wall  $(LIBCINC) 
-LFLAGS=$(CCFLAGS)  -Wall  $(LIBLINC)
+CFLAGS += $(LIBCINC) 
+LFLAGS = $(CFLAGS) -Wall $(LIBLINC)
+
+############################################################################
+SOMAJVER=0
+SOVER=$(SOMAJVER).0.1
 
 #############################################################################
 #add non-executables .c files to OBJS 
 #if .c file reside in a dir other than the current one, add .o rule below
-OBJS=$(OBJDIR)/strings.o \
-		 $(OBJDIR)/tuple.o \
-		 $(OBJDIR)/var.o \
-		 $(OBJDIR)/run.o 
 
+LIBS=$(LIBDIR)/common.o		\
+	 $(LIBDIR)/vector_i8.o  \
+	 $(LIBDIR)/vector_i16.o \
+	 $(LIBDIR)/vector_i32.o \
+	 $(LIBDIR)/vector_i64.o \
+	 $(LIBDIR)/vector_u8.o  \
+	 $(LIBDIR)/vector_u16.o \
+	 $(LIBDIR)/vector_u32.o \
+	 $(LIBDIR)/vector_u64.o
 
 ##############################################################################
 #EXECUTABLES: add executables rules here
 
-.PHONY: release all test debug
+.PHONY: release dirs vector all test debug clean
 
 release: CFLAGS +=$(OPTIM)
-release: search
+release: dirs
+release: vector
 	@echo "release: build successful"
 
 all: CFLAGS += $(OPTIM)
-all: search
+all: vector
 all: test
 	@echo "all: build successful"
 
 debug: CFLAGS += $(DEBUG)
-debug: search
+debug: dirs
+debug: vector
 	@echo "debug: build successful"
 
+dirs:
+	mkdir -p $(LIBDIR)
 
 test:
-	make -f test/Makefile
+	make -f $(TEST)/Makefile
 
-search: $(OBJDIR)/search.oo
-	ln -s $(OBJDIR)/search.oo $(BIN)/run
+vector: $(LIBDIR)/libvector.so $(LIBDIR)/libvector.a
 
-%.oo: %.o $(OBJS) $(LIBS)
+%.so: %.o $(OBJS) $(LIBS)
 	echo $<
-	$(GPP) $(LFLAGS) -o $@ $(OBJS) $< $(LIBLINK)
+	$(CC) $(LFLAGS) -o $@ $(OBJS) $< $(LIBLINK)
 
-$(OBJDIR)/search.o: $(SRCDIR)/main.c
-	mkdir -p obj
-	$(GPP) $(CFLAGS) -o $(OBJDIR)/search.o -c $(SRCDIR)/main.c
+%.a: %.o $(OBJS) $(LIBS)
+	echo $<
+	$(CC) $(LFLAGS) -o $@ $(OBJS) $< $(LIBLINK)
 
+$(LIBDIR)/libvector.so: $(LIBS)
+	$(CC) -shared -Wl,-soname,libvector.so.$(SOMAJVER) -o $@.$(SOVER) $^ 
+
+$(LIBDIR)/libvector.a: $(LIBS)
+	$(AR) $(ARFLAGS) $@ $^
 
 ##############################################################################
 # add non-executables .o rules here
 
-$(OBJDIR)/strings.o: $(RESDIR)/strings.c
-	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+$(LIBDIR)/common.o: $(SRCDIR)/common.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-$(OBJDIR)/tuple.o: $(SRCDIR)/tuple.c
-	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+$(LIBDIR)/vector_i8.o: $(SRCDIR)/vector_i8.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-$(OBJDIR)/var.o: $(SRCDIR)/var.c
-	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+$(LIBDIR)/vector_i16.o: $(SRCDIR)/vector_i16.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
+$(LIBDIR)/vector_i32.o: $(SRCDIR)/vector_i32.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-$(OBJDIR)/run.o: $(SRCDIR)/run.c
-	$(GPP) $(CFLAGS) $ -c $ $^ $ $ -o $ $@
+$(LIBDIR)/vector_i64.o: $(SRCDIR)/vector_i64.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+$(LIBDIR)/vector_u8.o: $(SRCDIR)/vector_u8.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+$(LIBDIR)/vector_u16.o: $(SRCDIR)/vector_u16.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+$(LIBDIR)/vector_u32.o: $(SRCDIR)/vector_u32.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+$(LIBDIR)/vector_u64.o: $(SRCDIR)/vector_u64.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
 
 ###############################################################################
 
 clean:
-	@rm -f $(OBJDIR)/*.o $(OBJDIR)/*.oo $(SRCDIR)/*~ 
+	@rm -f $(OBJDIR)/*.o $(OBJDIR)/*.oo \
+	$(LIBDIR)/*.o $(LIBDIR)/*.so $(LIBDIR)/*.so.* $(LIBDIR)/*.a \
+	$(SRCDIR)/*~ 

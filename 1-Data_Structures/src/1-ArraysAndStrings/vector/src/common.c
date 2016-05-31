@@ -1,4 +1,4 @@
-/* common.h
+/* common.c
  * Defines common traits and utils for vector implementations
  * defined within vector
  * 
@@ -17,16 +17,14 @@
  * limitations under the License.
  */
 
-#ifndef ARRAYS_AND_STRINGS_INCLUDE_VECTOR_IMPL_COMMON_H
-#define ARRAYS_AND_STRINGS_INCLUDE_VECTOR_IMPL_COMMON_H
+#include "../include/vector_impl/common.h"
 
-#include "../c_types.h"
+size_t vector_grow_capacity(size_t capacity)
+{
+	return VECTOR_CAPACITY_GROWTH_RATE * capacity;
+}
 
-#define VECTOR_START_CAPACITY 32
-#define VECTOR_CAPACITY_GROWTH_RATE 2
-#define VECTOR_CAPACITY_SHRINK_RATE 3
-
-size_t vector_grow_capacity(size_t capacity);
-size_t vector_shrink_capacity(size_t capacity);
-
-#endif // !ARRAYS_AND_STRINGS_INCLUDE_VECTOR_IMPL_COMMON_H
+size_t vector_shrink_capacity(size_t capacity)
+{
+	return vector_grow_capacity(capacity)/VECTOR_CAPACITY_SHRINK_RATE;
+}
